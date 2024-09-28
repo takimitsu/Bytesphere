@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+  font-family: 'Inter';
+}
+
+body {
+  background-color: #f5f7f8 !important;
+}
+
+body, html {
+  overflow-x: hidden;
+}
+
+.btn-primary {
+  background-color: #ed1f85 !important;
+  color: #fff;
+  border: 0 !important;
+}
