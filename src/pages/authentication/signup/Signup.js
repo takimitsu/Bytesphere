@@ -1,8 +1,8 @@
-import './Login.css';
-import logo from './assets/bytesphere_logo.png';
+import './Signup.css';
+import logo from '../../../assets/bytesphere_logo.png';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import { auth, db } from './firebase';
+import { auth, db } from '../../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
