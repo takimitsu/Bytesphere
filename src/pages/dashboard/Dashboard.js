@@ -130,7 +130,7 @@ function App() {
                 </div>
             </div>
       </div>
-      <Footer />
+      <Footer userData={userData}/>
     </div>
   );
 }

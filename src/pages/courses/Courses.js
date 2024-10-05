@@ -1,5 +1,5 @@
 import './Courses.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@popperjs/core";
 import "bootstrap";
@@ -9,14 +9,59 @@ import javascriptImage from '../../assets/javascript.jpeg';
 import reactImage from '../../assets/react.jpeg';
 import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
+
+const fetchCourseTitles = async (courseName) => {
+    try {
+      const courseCollection = collection(db, courseName);
+      const courseSnapshot = await getDocs(courseCollection);
+
+      const courseStatsDoc = doc(db, courseName, 'courseStats');
+      const courseStatsSnapshot = await getDoc(courseStatsDoc);
+        
+      const titles = [];
+      courseSnapshot.forEach(doc => {
+        const lessonData = doc.data();
+        titles.push(lessonData.subTitle);
+      });
+
+      const mainTitle = courseStatsSnapshot.exists() ? courseStatsSnapshot.data().mainTitle : 'Untitled Course';
+
+      return { titles, mainTitle };
+    } catch (error) {
+      console.error(`Error fetching ${courseName} lessons: `, error);
+      return { titles: [], mainTitle: '' };
+    }
+};
 
 function App() {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [titles, setTitles] = useState([]);
+    const [mainTitle, setMainTitle] = useState('');
+    const [lessonData, setLessonData] = useState('');
+
   useEffect(() => {
     document.title = 'Bytesphere';
   }, []);
 
+
+ const openModal = async (courseName) => {
+    const { titles, mainTitle } = await fetchCourseTitles(courseName);
+    setTitles(titles);
+    setMainTitle(mainTitle);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setLessonData('');
+    setTitles([]);
+    setMainTitle('');
+  };
+
   return (
-    <div className="App">
+    <div className="Courses">
       <Navbar />
       <div className="main-container container mt-5">
         <p className="text-center mb-4">Choose a Course</p>
@@ -30,7 +75,7 @@ function App() {
                         <div className="mt-auto">
                             <div className="d-flex justify-content-between align-items-center mt-auto">
                                 <p className="mb-0">5 Lessons</p>
-                                <a className="btn btn-primary">Open Course</a>
+                                <a className="btn btn-primary" onClick={() => openModal('basicsCourse')}>Open Course</a>
                             </div>
                         </div>                      
                     </div>
@@ -45,7 +90,7 @@ function App() {
                         <div className="mt-auto">
                             <div className="d-flex justify-content-between align-items-center">
                                 <p className="mb-0">5 Lessons</p>
-                                <a className="btn btn-primary mt-auto">Open Course</a>
+                                <a className="btn btn-primary mt-auto" onClick={() => openModal('pythonCourse')}>Open Course</a>
                             </div>
                         </div>                      
                     </div>
@@ -62,7 +107,7 @@ function App() {
                         <div className="mt-auto">
                             <div className="d-flex justify-content-between align-items-center">
                                 <p className="mb-0">9 Lessons</p>
-                                <a className="btn btn-primary mt-auto">Open Course</a>
+                                <a className="btn btn-primary mt-auto" onClick={() => openModal('javaScriptCourse')}>Open Course</a>
                             </div>
                         </div>                        
                     </div>
@@ -77,12 +122,31 @@ function App() {
                         <div className="mt-auto"> 
                             <div className="d-flex justify-content-between align-items-center">
                                 <p className="mb-0 mt-auto">15 Lessons</p>
-                                <a className="btn btn-primary mt-auto">Open Course</a>
+                                <a className="btn btn-primary mt-auto" onClick={() => openModal('reactCourse')}>Open Course</a>
                             </div>                          
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+      </div>
+      <div className={`modal fade ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1" role="dialog">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">{mainTitle}</h5>
+            </div>
+            <div className="modal-body">
+                <ul>
+                    {titles.map((title, index) => (
+                        <li key={index}>{title}</li>
+                    ))}
+                </ul>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button>
+            </div>
+          </div>
         </div>
       </div>
       <Footer />
