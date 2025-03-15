@@ -5,7 +5,7 @@ import "bootstrap";
 import logo from '../../assets/bytesphere_logo.png';
 import splashLogo from '../../assets/splashlogo.png';
 import avatar from '../../assets/avatar.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const Navbar = ({ userData }) => {
@@ -26,26 +26,34 @@ const Navbar = ({ userData }) => {
 
             <div className="collapse navbar-collapse text-center" id="navbarSupportedContent">
                 <ul className="navbar-nav mx-auto">
-                <li className="nav-item">
-                    <a className="nav-link" href="#">Home</a>
-                </li>
-                <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Courses
-                    </a>
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a className="dropdown-item" href="#">Basics</a>
-                    <a className="dropdown-item" href="#">Python</a>
-                    <a className="dropdown-item" href="#">JavaScript</a>
-                    <a className="dropdown-item" href="#">ReactJS</a>
-                    </div>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="#">Statistics</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="#">My Account</a>
-                </li>
+                    { userData ?
+                        <>
+                            <li className="nav-item">
+                            <Link to="/dashboard"><a className="nav-link" href="#">Home</a></Link>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Courses
+                                </a>
+                                <Link to="/courses">
+                                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a className="dropdown-item" href="#">Basics</a>
+                                    <a className="dropdown-item" href="#">Python</a>
+                                    <a className="dropdown-item" href="#">JavaScript</a>
+                                    <a className="dropdown-item" href="#">ReactJS</a>
+                                </div>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">Statistics</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">My Account</a>
+                            </li>
+                        </>
+                    :
+                        <li></li>
+                    }
                 </ul>
                 <div className="text-center d-flex">
                     { userData ?

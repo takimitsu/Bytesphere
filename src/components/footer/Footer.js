@@ -8,7 +8,7 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { auth } from '../../firebase.js';
 import { signOut } from 'firebase/auth';
 
@@ -36,7 +36,7 @@ const Footer = ({ userData }) => {
                         <div className="col-md-3 widget-section d-flex justify-content-center">
                             <ul>
                             <li className="category mb-1">Home</li>
-                            <li><a href="#">Dashboard</a></li>
+                            <li><Link to="/dashboard"><a>Dashboard</a></Link></li>
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">Support</a></li>
                             </ul>
@@ -44,10 +44,10 @@ const Footer = ({ userData }) => {
                         <div className="col-md-3 widget-section d-flex justify-content-center">
                             <ul>
                             <li className="category mb-1">Courses</li>
-                            <li><a href="#">Basics</a></li>
-                            <li><a href="#">Python</a></li>
-                            <li><a href="#">JavaScript</a></li>
-                            <li><a href="#">ReactJS</a></li>
+                            <li><Link to="/courses"><a>Basics</a></Link></li>
+                            <li><Link to="/courses"><a>Python</a></Link></li>
+                            <li><Link to="/courses"><a>JavaScript</a></Link></li>
+                            <li><Link to="/courses"><a>ReactJS</a></Link></li>
                             </ul>
                         </div>
                         <div className="col-md-3 widget-section d-flex justify-content-center">

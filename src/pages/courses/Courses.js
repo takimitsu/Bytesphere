@@ -10,29 +10,33 @@ import reactImage from '../../assets/react.jpeg';
 import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../../firebase.js';
+import { onAuthStateChanged } from 'firebase/auth';
 
-const fetchCourseTitles = async (courseName) => {
-    try {
-      const courseCollection = collection(db, courseName);
-      const courseSnapshot = await getDocs(courseCollection);
+const fetchCourseData = async (courseName) => {
+  try {
+    const courseCollection = collection(db, courseName);
+    const courseSnapshot = await getDocs(courseCollection);
+    
+    const courseStatsDoc = doc(db, courseName, 'courseStats');
+    const courseStatsSnapshot = await getDoc(courseStatsDoc);
 
-      const courseStatsDoc = doc(db, courseName, 'courseStats');
-      const courseStatsSnapshot = await getDoc(courseStatsDoc);
-        
-      const titles = [];
-      courseSnapshot.forEach(doc => {
+    const titles = [];
+    courseSnapshot.forEach(doc => {
+      if (doc.id !== 'courseStats') {
         const lessonData = doc.data();
-        titles.push(lessonData.subTitle);
-      });
+        titles.push({ id: doc.id, title: lessonData.subTitle });
+      }
+    });
 
-      const mainTitle = courseStatsSnapshot.exists() ? courseStatsSnapshot.data().mainTitle : 'Untitled Course';
+    const mainTitle = courseStatsSnapshot.exists() ? courseStatsSnapshot.data().mainTitle : 'No main title found';
 
-      return { titles, mainTitle };
-    } catch (error) {
-      console.error(`Error fetching ${courseName} lessons: `, error);
-      return { titles: [], mainTitle: '' };
-    }
+    return { titles, mainTitle };
+  } catch (error) {
+    console.error(`Error fetching ${courseName} data: `, error);
+    return { titles: [], mainTitle: '' };
+  }
 };
 
 function App() {
@@ -40,16 +44,53 @@ function App() {
     const [titles, setTitles] = useState([]);
     const [mainTitle, setMainTitle] = useState('');
     const [lessonData, setLessonData] = useState('');
+    const [courseChosen, setCourseChosen] = useState('');
+    const [authUser, setAuthUser] = useState(null);
+    const [userData, setUserData] = useState(null);
+
+
+    const navigate = useNavigate();
+
+    const handleLessonClick = (courseName, lessonId) => {
+      navigate(`/lesson/${courseName}/${lessonId}`)
+    };
 
   useEffect(() => {
     document.title = 'Bytesphere';
   }, []);
 
+  useEffect(() => {
+    const listen = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setAuthUser(user);
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          setUserData(userDocSnap.data());
+        } else {
+          console.log('No such document!');
+        }
+      } else {
+        setAuthUser(null);
+        setUserData(null);
+        navigate('/login');
+      }
+    });
+
+    return () => {
+      listen();
+    }
+  }, []);
 
  const openModal = async (courseName) => {
-    const { titles, mainTitle } = await fetchCourseTitles(courseName);
+    const { titles, mainTitle } = await fetchCourseData(courseName);
+    titles.map(({ id, title }) => (
+      console.log(id, title)
+    ))
     setTitles(titles);
     setMainTitle(mainTitle);
+    setCourseChosen(courseName);
     setModalVisible(true);
   };
 
@@ -58,11 +99,12 @@ function App() {
     setLessonData('');
     setTitles([]);
     setMainTitle('');
+    setCourseChosen('');
   };
 
   return (
     <div className="Courses">
-      <Navbar />
+      <Navbar userData={userData}/>
       <div className="main-container container mt-5">
         <p className="text-center mb-4">Choose a Course</p>
         <div className="row justify-content-center">
@@ -138,8 +180,8 @@ function App() {
             </div>
             <div className="modal-body">
                 <ul>
-                    {titles.map((title, index) => (
-                        <li key={index}>{title}</li>
+                    {titles.map(({ id, title }) => (
+                        <li key={id} onClick={() => handleLessonClick(courseChosen, id)}>{title}</li>
                     ))}
                 </ul>
             </div>
@@ -149,7 +191,7 @@ function App() {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer userData={userData}/>
     </div>
   );
 }

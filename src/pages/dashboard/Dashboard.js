@@ -46,7 +46,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="Dashboard">
         <Navbar userData={userData}/>
         <div className="main-container container">
             <h1 className="mt-5">{userData ? `Welcome, ${userData.username}!` : 'N/A'}</h1>
