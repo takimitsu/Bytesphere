@@ -1,70 +1,26 @@
-# Getting Started with Create React App
+# Vzdelávacia platforma Bytesphere
+Tento projekt predstavuje modernú webovú aplikáciu zameranú na interaktívnu výučbu programovacích jazykov. Je inšpirovaný populárnou platformou Duolingo, pričom princípy gamifikácie prenáša do sveta programovania. Projekt bol vytvorený ako **maturitná práca**.
+## O projekte
+Cieľom projektu je urobiť učenie programovania zábavným, návykovým a prístupným pre každého. Používatelia prechádzajú štrukturovanými kurzami, riešia úlohy a získavajú body, ktoré ich posúvajú na vyššie úrovne, za ktoré dostávajú ocenenia.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Hlavné vlastnosti:
+* **Interaktívne kurzy**: Aktuálne dostupný kurz **Python**, ktorý je rozdelený do jednotlivých lekcií.
+* **Gamifikácia**: Systém bodovania (XP) a úrovní, ktorý motivuje k pravidelnému štúdiu.
+* **Dashboard**: Prehľad o celkovom pokroku používateľa, zobrazenie aktuálnych štatistík a priebehu kurzov.
+* **Štatistiky**": Detailný pohľad na úspešnosť a aktivitu.
+* **Ocenenia**: Systém udeľovania ocenení na základe úrovne. Ocenenie, ktoré používateľ nedostal, sú uzamknuté.
+* **Správa účtu**: Možnosť prispôsobenia profilu a nastavení v rámci používateľského konta.
+* **Adaptívne rozhranie**: Intro stránka pre nových používateľov a zabezpečená zóna pre prihlásených.
+## Použité technológie
+Aplikácia je postavená na modernom technologickom stacku pre zabezpečenie rýchlosti, škálovateľnosti a reaktivity.
+* **Frontend**: ReactJS
+* **Backend & Databáza**: Firebase (autentifikácia používateľov, hosting), Firestore (databáza)
+* **Styling**: Bootstrap a CSS
+* **Deployment**: Firebase Hosting
+## URL na stránku
+https://bytesphere-e6949.firebaseapp.com/
+## Stav projektu a budúcnosť
+Projekt bol úspešne odovzdaný a obhájený ako maturitná práca s vyníkajúcim hodnotením. V budúcnosti plánujem:
+* Implementáciu kurzu pre Základy programovania, JavaScript a React.
+* Implementáciu sociálneho systému (feed, komentáre, správy) a globálneho rebríčka pre súťaženie medzi používateľmi.
+* Komunitná stránka, ktorá umožňuje vytvárať vlastné kurzy a lekcie komunitou.
